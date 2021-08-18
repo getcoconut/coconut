@@ -1451,6 +1451,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xtech/prettier-config@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@xtech/prettier-config@npm:1.0.1"
+  checksum: 2b28f483106e42fe68faebcd96f5d173743d5412826d2ede69d7f13e0b38976f57fa76e70a81ee28804c0b71ae92e1f9812d7fe78222c7cfc1b6ed5ee6bfaa4f
+  languageName: node
+  linkType: hard
+
 "@xtuc/ieee754@npm:^1.2.0":
   version: 1.2.0
   resolution: "@xtuc/ieee754@npm:1.2.0"
