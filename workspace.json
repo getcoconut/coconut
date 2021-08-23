@@ -20,7 +20,7 @@
             "passWithNoTests": true
           }
         },
-        "build": {
+        "buildOriginal": {
           "executor": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
@@ -30,6 +30,20 @@
             "main": "packages/cli/src/index.ts",
             "assets": ["packages/cli/*.md"],
             "cli": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "nx buildOriginal cli"
+              },
+              {
+                "command": "node ./tools/update-cli-bin-name.js"
+              }
+            ]
           }
         }
       }
