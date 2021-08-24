@@ -1,5 +1,5 @@
 {
-  "npmScope": "coconut",
+  "npmScope": "@getcoconut",
   "affected": {
     "defaultBase": "develop"
   },
@@ -27,6 +27,9 @@
     ]
   },
   "projects": {
+    "cli": {
+      "tags": []
+    },
     "pulumi-cloud-mock": {
       "tags": []
     }
