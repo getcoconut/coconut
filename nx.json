@@ -1,5 +1,5 @@
 {
-  "npmScope": "coconut",
+  "npmScope": "@getcoconut",
   "affected": {
     "defaultBase": "develop"
   },
