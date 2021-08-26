@@ -1,3 +1,4 @@
+import 'tslib'; // Force Nx to add it to the package's dependencies
 import yargs, { terminalWidth } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
