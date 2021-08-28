@@ -1,4 +1,4 @@
-import fs = require('fs');
+import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
 
@@ -24,16 +24,16 @@ export const handler = async function (argv) {
   const projectFile = path.join(projectPath, 'index.ts');
 
   const tempPath = fs.mkdtempSync(
-    path.join(os.tmpdir(), `coconut-${projectName}`)
+    path.join(os.tmpdir(), `coconut-${projectName}-`)
   );
 
   console.log(`Mocking project at ${projectFile}...`);
 
-  if (!fs.existsSync(projectFile)) {
+  if (!fs.pathExistsSync(projectFile)) {
     throw new CustomError('Project file not found.');
   }
 
-  fs.mkdirSync(tempPath, { recursive: true });
+  fs.ensureDirSync(tempPath);
 
   const workspace = await LocalWorkspace.create({
     projectSettings: {
