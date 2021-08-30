@@ -3,37 +3,25 @@ import pulumi = require('@pulumi/pulumi');
 import { Table } from './table';
 
 describe('Table resource', () => {
-  describe('constructor', () => {
-    it('Creates an instance with the correct defaults', (done) => {
-      const table = new Table('test');
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
-      pulumi
-        .all([table.primaryKey, table.primaryKeyType])
-        .apply(([primaryKey, primaryKeyType]) => {
-          try {
-            expect(primaryKey).toBe('id');
-            expect(primaryKeyType).toBe('string');
-            done();
-          } catch (err) {
-            done(err);
-          }
-        });
+  describe('constructor', () => {
+    it('Creates an instance with the correct defaults', async () => {
+      const table = new Table('test');
+      const [primaryKey, primaryKeyType] = await table.$getOutputs();
+
+      expect(primaryKey).toBe('id');
+      expect(primaryKeyType).toBe('string');
     });
 
-    it('Creates an instance with the specified settings', (done) => {
+    it('Creates an instance with the specified settings', async () => {
       const table = new Table('test', 'pk', 'number');
+      const [primaryKey, primaryKeyType] = await table.$getOutputs();
 
-      pulumi
-        .all([table.primaryKey, table.primaryKeyType])
-        .apply(([primaryKey, primaryKeyType]) => {
-          try {
-            expect(primaryKey).toBe('pk');
-            expect(primaryKeyType).toBe('number');
-            done();
-          } catch (err) {
-            done(err);
-          }
-        });
+      expect(primaryKey).toBe('pk');
+      expect(primaryKeyType).toBe('number');
     });
 
     it('Registers the outputs', () => {
@@ -51,6 +39,38 @@ describe('Table resource', () => {
           primaryKeyType: table.primaryKeyType,
         })
       );
+    });
+  });
+
+  describe('get', () => {
+    it('Fails for invalid query', async () => {
+      const table = new Table('test');
+
+      await expect(table.get({ invalidPK: 'value' })).rejects.toThrow();
+      await expect(table.get({ id: 123 })).rejects.toThrow();
+      await expect(table.get({ id: '1', extraProp: '1' })).rejects.toThrow();
+    });
+
+    it('Returns undefined if no item found', async () => {
+      const table = new Table('test');
+      const item = await table.get({ id: '1' });
+
+      expect(item).toBeUndefined();
+    });
+
+    it('Returns the correct item if found', async () => {
+      const table = new Table('test');
+
+      const data = [
+        { id: '1', name: 'Coconut' },
+        { id: '2', name: 'Coco' },
+      ];
+
+      table.$data = data;
+
+      const item = await table.get({ id: '2' });
+
+      expect(item).toBe(data[1]);
     });
   });
 });
