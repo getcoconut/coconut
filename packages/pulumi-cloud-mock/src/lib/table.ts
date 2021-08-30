@@ -16,7 +16,13 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
   ) {
     super('cloud:table:Table', name, {}, opts);
 
-    throw new Error('Method not implemented.');
+    this.primaryKey = pulumi.output(primaryKey || 'id');
+    this.primaryKeyType = pulumi.output(primaryKeyType || 'string');
+
+    this.registerOutputs({
+      primaryKey: this.primaryKey,
+      primaryKeyType: this.primaryKeyType,
+    });
   }
 
   get(query: unknown): Promise<any> {
