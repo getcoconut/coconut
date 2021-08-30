@@ -1,4 +1,3 @@
-import 'tslib'; // Force Nx to add it to the package's dependencies
 import { isCustomError } from './lib/errors';
 import { createParser } from './lib/parser';
 
