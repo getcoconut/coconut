@@ -81,4 +81,41 @@ describe('Table resource', () => {
       expect(item).toBe(data[1]);
     });
   });
+
+  describe('insert', () => {
+    it('Fails for invalid item', async () => {
+      const table = new Table('test');
+
+      await expect(table.insert({ noPK: 'value' })).rejects.toThrow(
+        /Primary key missing/
+      );
+
+      await expect(table.insert({ id: 123 })).rejects.toThrow(
+        /The value of the primary key must be of type 'string'/
+      );
+    });
+
+    it('Fails if item with same id exists', async () => {
+      const table = new Table('test');
+
+      table.$data = [
+        { id: '1', name: 'Coconut' },
+        { id: '2', name: 'Coco' },
+      ];
+
+      await expect(
+        table.insert({ id: '2', name: 'Coco beach' })
+      ).rejects.toThrow(/There is already an item with primary key '2'./);
+    });
+
+    it('Inserts item', async () => {
+      const table = new Table('test');
+      const item = { id: '1', name: 'Coco beach' };
+
+      await table.insert(item);
+
+      expect(table.$data).toHaveLength(1);
+      expect(table.$data[0]).toMatchObject(item);
+    });
+  });
 });

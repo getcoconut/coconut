@@ -51,8 +51,33 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
     return this.$data?.find((item) => item[primaryKey] === query[primaryKey]);
   }
 
-  insert(item: unknown): Promise<void> {
-    throw new Error('Method not implemented.');
+  async insert(item: unknown): Promise<void> {
+    const [primaryKey, primaryKeyType] = await this.$getOutputs();
+    const keys = Object.keys(item);
+
+    if (item[primaryKey] === undefined) {
+      throw new Error(
+        `Invalid item '${JSON.stringify(item)}'. Primary key missing.`
+      );
+    }
+
+    if (typeof item[primaryKey] !== primaryKeyType) {
+      throw new Error(
+        `Invalid item '${JSON.stringify(
+          item
+        )}'. The value of the primary key must be of type '${primaryKeyType}'.`
+      );
+    }
+
+    const existingItem = await this.get({ [primaryKey]: item[primaryKey] });
+
+    if (existingItem) {
+      throw new Error(
+        `There is already an item with primary key '${item[primaryKey]}'.`
+      );
+    }
+
+    this.$data.push(Object.assign({}, item));
   }
 
   scan(): Promise<any[]>;
