@@ -127,8 +127,23 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
     this.$data.splice(index, 1);
   }
 
-  update(query: unknown, updates: unknown): Promise<void> {
-    throw new Error('Method not implemented.');
+  async update(query: unknown, updates: unknown): Promise<void> {
+    const [primaryKey] = await this.$getOutputs();
+    const item = await this.get(query); // A simple way of validating the query and checking for item existence
+
+    if (!item) {
+      throw new Error('Item not found.');
+    }
+
+    if (Object.prototype.hasOwnProperty.call(updates, primaryKey)) {
+      throw new Error("Updates object can't contain primary key");
+    }
+
+    const index = this.$data.findIndex(
+      (item) => item[primaryKey] === query[primaryKey]
+    );
+
+    Object.assign(this.$data[index], updates);
   }
 
   // We can't access output values through Output.get() as the dpeloyment will

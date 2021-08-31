@@ -208,6 +208,59 @@ describe('Table resource', () => {
       expect(table.$data).toMatchObject([data[0], data[2]]);
     });
   });
+
+  describe('update', () => {
+    it('Fails for invalid query', async () => {
+      const table = new Table('test');
+
+      await expect(table.update({ invalidPK: 'value' }, {})).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(
+        table.update({ id: '1', extraProp: '1' }, {})
+      ).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(table.update({ id: 123 }, {})).rejects.toThrow(
+        /The value of the primary key must be of type 'string'/
+      );
+    });
+
+    it('Fails if item not found', async () => {
+      const table = new Table('test');
+
+      await expect(table.update({ id: '1' }, {})).rejects.toThrow(
+        /Item not found/
+      );
+    });
+
+    it('Fails for invalid updates object', async () => {
+      const table = new Table('test');
+
+      table.$data = createData(3);
+
+      await expect(table.update({ id: '1' }, { id: '1' })).rejects.toThrow(
+        /Updates object can't contain primary key/
+      );
+
+      await expect(
+        table.update({ id: '1' }, { id: undefined })
+      ).rejects.toThrow(/Updates object can't contain primary key/);
+    });
+
+    it('Updates item if found', async () => {
+      const table = new Table('test');
+      const updates = { name: undefined, nullProp: null, anotherProp: 123 };
+
+      table.$data = createData(3);
+
+      await table.update({ id: '2' }, updates);
+
+      expect(table.$data[1]).toMatchObject({ id: '2', ...updates });
+    });
+  });
 });
 
 function createData(itemCount: number) {
