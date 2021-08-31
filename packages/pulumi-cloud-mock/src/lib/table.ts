@@ -40,13 +40,11 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
       );
     }
 
-    if (typeof query[keys[0]] !== primaryKeyType) {
+    if (typeof query[primaryKey] !== primaryKeyType) {
       throw new Error(
         `Invalid query '${JSON.stringify(
           query
-        )}'. The value of the primary key must be of type '${
-          this.primaryKeyType
-        }'`
+        )}'. The value of the primary key must be of type '${primaryKeyType}'.`
       );
     }
 

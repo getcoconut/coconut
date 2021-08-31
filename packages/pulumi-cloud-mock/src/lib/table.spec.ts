@@ -46,9 +46,17 @@ describe('Table resource', () => {
     it('Fails for invalid query', async () => {
       const table = new Table('test');
 
-      await expect(table.get({ invalidPK: 'value' })).rejects.toThrow();
-      await expect(table.get({ id: 123 })).rejects.toThrow();
-      await expect(table.get({ id: '1', extraProp: '1' })).rejects.toThrow();
+      await expect(table.get({ invalidPK: 'value' })).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(table.get({ id: '1', extraProp: '1' })).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(table.get({ id: 123 })).rejects.toThrow(
+        /The value of the primary key must be of type 'string'/
+      );
     });
 
     it('Returns undefined if no item found', async () => {
