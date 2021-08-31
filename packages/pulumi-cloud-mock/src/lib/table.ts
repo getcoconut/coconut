@@ -4,6 +4,20 @@
 import * as cloud from '@pulumi/cloud';
 import * as pulumi from '@pulumi/pulumi';
 
+/*
+ * Principles used in the implementation of the Table service:
+ *
+ * 1. Be strict: the mock provider is intended to be used during development
+ *    and local testing, so it should help the developer identify any possible
+ *    issues with his code. To achieve this, we should be strict about props
+ *    validation and how the correct behviour should look like.
+ * 2. Work with copies of data: when inserting data into the internal $data
+ *    object or when returning data out of it, always make copies. This is to
+ *    mimic the behaviour of real databases, as changing the properties of an
+ *    object returned from the database doesn't update the corresponding item
+ *    in the database.
+ */
+
 export class Table extends pulumi.ComponentResource implements cloud.Table {
   public readonly primaryKey: pulumi.Output<string>;
   public readonly primaryKeyType: pulumi.Output<string>;
