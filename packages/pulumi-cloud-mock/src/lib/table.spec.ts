@@ -173,6 +173,41 @@ describe('Table resource', () => {
       expect(cbItems).toMatchObject(table.$data.splice(0, Table.$pageSize * 3));
     });
   });
+
+  describe('delete', () => {
+    it('Fails for invalid query', async () => {
+      const table = new Table('test');
+
+      await expect(table.delete({ invalidPK: 'value' })).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(table.delete({ id: '1', extraProp: '1' })).rejects.toThrow(
+        /Query must contain the primary key, and only the primary key/
+      );
+
+      await expect(table.delete({ id: 123 })).rejects.toThrow(
+        /The value of the primary key must be of type 'string'/
+      );
+    });
+
+    it('Fails if item not found', async () => {
+      const table = new Table('test');
+
+      await expect(table.delete({ id: '1' })).rejects.toThrow(/Item not found/);
+    });
+
+    it('Deletes item if found', async () => {
+      const table = new Table('test');
+      const data = createData(3);
+
+      table.$data = [...data];
+
+      await table.delete({ id: '2' });
+
+      expect(table.$data).toMatchObject([data[0], data[2]]);
+    });
+  });
 });
 
 function createData(itemCount: number) {

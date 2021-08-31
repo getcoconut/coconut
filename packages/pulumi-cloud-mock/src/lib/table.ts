@@ -112,8 +112,19 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
     return callback ? undefined : data;
   }
 
-  delete(query: unknown): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(query: unknown): Promise<void> {
+    const [primaryKey] = await this.$getOutputs();
+    const item = await this.get(query); // A simple way of validating the query and checking for item existence
+
+    if (!item) {
+      throw new Error('Item not found.');
+    }
+
+    const index = this.$data.findIndex(
+      (item) => item[primaryKey] === query[primaryKey]
+    );
+
+    this.$data.splice(index, 1);
   }
 
   update(query: unknown, updates: unknown): Promise<void> {
