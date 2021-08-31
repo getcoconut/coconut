@@ -49,12 +49,15 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
       );
     }
 
-    return this.$data?.find((item) => item[primaryKey] === query[primaryKey]);
+    const item = this.$data?.find(
+      (item) => item[primaryKey] === query[primaryKey]
+    );
+
+    return item ? Object.assign({}, item) : undefined;
   }
 
   async insert(item: unknown): Promise<void> {
     const [primaryKey, primaryKeyType] = await this.$getOutputs();
-    const keys = Object.keys(item);
 
     if (item[primaryKey] === undefined) {
       throw new Error(

@@ -59,7 +59,7 @@ describe('Table resource', () => {
       );
     });
 
-    it('Returns undefined if no item found', async () => {
+    it('Returns undefined if item not found', async () => {
       const table = new Table('test');
       const item = await table.get({ id: '1' });
 
@@ -78,7 +78,7 @@ describe('Table resource', () => {
 
       const item = await table.get({ id: '2' });
 
-      expect(item).toBe(data[1]);
+      expect(item).toEqual(data[1]);
     });
   });
 
