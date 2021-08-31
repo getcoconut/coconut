@@ -9,6 +9,7 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
   public readonly primaryKeyType: pulumi.Output<string>;
 
   // For mocking and testing purposes
+  public static $pageSize = 10;
   public $data: Array<unknown> = [];
 
   constructor(
@@ -82,8 +83,30 @@ export class Table extends pulumi.ComponentResource implements cloud.Table {
 
   scan(): Promise<any[]>;
   scan(callback: (items: any[]) => Promise<boolean>): Promise<void>;
-  scan(callback?: any): Promise<void> | Promise<any[]> {
-    throw new Error('Method not implemented.');
+  async scan(callback?: any): Promise<void | any[]> {
+    const pageCount = Math.ceil(this.$data.length / Table.$pageSize);
+    const data = [];
+
+    let currentPage = 1;
+
+    while (currentPage <= pageCount) {
+      const start = (currentPage - 1) * Table.$pageSize;
+      const end = start + Table.$pageSize;
+
+      const pageItems = this.$data
+        .slice(start, end)
+        .map((item) => Object.assign({}, item));
+
+      if (callback) {
+        if (!(await callback(pageItems))) break;
+      } else {
+        data.push(...pageItems);
+      }
+
+      currentPage++;
+    }
+
+    return callback ? undefined : data;
   }
 
   delete(query: unknown): Promise<void> {

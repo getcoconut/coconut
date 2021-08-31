@@ -118,4 +118,65 @@ describe('Table resource', () => {
       expect(table.$data[0]).toMatchObject(item);
     });
   });
+
+  describe('scan', () => {
+    it('Returns all items if called without a callback', async () => {
+      const itemCount = Table.$pageSize * 3.3; // 4 pages, last not full
+      const table = new Table('test');
+
+      table.$data = createData(itemCount);
+
+      const items = await table.scan();
+
+      expect(items).toMatchObject(table.$data);
+    });
+
+    it('Calls callback for all pages if it always returns true', async () => {
+      const itemCount = Table.$pageSize * 3.3; // 4 pages, last not full
+      const table = new Table('test');
+      const cbItems = [];
+
+      const cb = jest.fn(async (items) => {
+        cbItems.push(...items);
+
+        return true;
+      });
+
+      table.$data = createData(itemCount);
+
+      const items = await table.scan(cb);
+
+      expect(items).toBeUndefined();
+      expect(cb).toHaveBeenCalledTimes(4);
+      expect(cbItems).toMatchObject(table.$data);
+    });
+
+    it('Stops when callback returns false', async () => {
+      const itemCount = Table.$pageSize * 3.3; // 4 pages, last not full
+      const stopId = `${2.1 * Table.$pageSize}`; // Stop on 3rd page
+      const table = new Table('test');
+      const cbItems = [];
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const cb = jest.fn(async (items: any[]) => {
+        cbItems.push(...items);
+
+        return items.findIndex((item) => item.id === stopId) < 0;
+      });
+
+      table.$data = createData(itemCount);
+
+      const items = await table.scan(cb);
+
+      expect(items).toBeUndefined();
+      expect(cb).toHaveBeenCalledTimes(3);
+      expect(cbItems).toMatchObject(table.$data.splice(0, Table.$pageSize * 3));
+    });
+  });
 });
+
+function createData(itemCount: number) {
+  return new Array(itemCount)
+    .fill(null)
+    .map((_, index) => ({ id: `${index + 1}`, name: `Coconut ${index + 1}` }));
+}
