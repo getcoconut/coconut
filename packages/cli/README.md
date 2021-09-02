@@ -16,4 +16,4 @@ $ npm install -D @getcoconut/cli @getcoconut/pulumi-cloud-mock
 $ npm run coconut
 ```
 
-Once the Pulumi cloud program is executed and the resources are ready, you will see the related information to use these resources and test your project. An example of this information is the URL of an HTTP Server resource.
+Once the Pulumi cloud program is executed and the resources are ready, the outputs exported by the program will be printed on the screen and you can use them for testing. An example of these outputs are the URLs of the HTTP Server resources created by the program.
