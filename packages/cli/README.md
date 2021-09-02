@@ -1,7 +1,19 @@
-# cli
+# Coconut CLI
 
-This library was generated with [Nx](https://nx.dev).
+Coconut CLI is a tool for locally emulating and mocking [Pulumi cloud](https://github.com/pulumi/pulumi-cloud) projects. By using the Coconut CLI, developers are able to emulate and test their projects locally without ever needing to deploy them to the cloud.
 
-## Running unit tests
+> Note: This tool is meant to work with pure Pulumi cloud projects. So if your project uses other Pulumi resources, they won't be emulated and might prevent the emulation from working correctly.
 
-Run `nx test cli` to execute the unit tests via [Jest](https://jestjs.io).
+> Note: Check the [Pulumi cloud mock provider](../pulumi-cloud-mock) for details about the supported resources.
+
+## Getting started
+
+To get started, go to your Pulumi cloud project, install the required packages and run the tool:
+
+```sh
+$ cd <project>
+$ npm install -D @getcoconut/cli @getcoconut/pulumi-cloud-mock
+$ npm run coconut
+```
+
+Once the Pulumi cloud program is executed and the resources are ready, you will see the related information to use these resources and test your project. An example of this information is the URL of an HTTP Server resource.
