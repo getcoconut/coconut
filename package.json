@@ -5,7 +5,6 @@
   "homepage": "https://getcoconut.io",
   "license": "MIT",
   "private": true,
-  "author": "xTECH <tech@xtech.guru>",
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
