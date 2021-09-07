@@ -5,12 +5,12 @@
   "homepage": "https://getcoconut.io",
   "license": "MIT",
   "private": true,
-  "author": "xTECH <tech@xtech.guru>",
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "test:all": "nx run-many --target=test --all",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",

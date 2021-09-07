@@ -39,5 +39,5 @@ describe('Mock command', () => {
 
     expect(mockedMockProgram.pulumiProgram).toHaveBeenCalledWith(projectFile);
     expect(pulumiProgram).toHaveBeenCalledTimes(1);
-  });
+  }, 30000);
 });
