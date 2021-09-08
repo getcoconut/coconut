@@ -1,7 +1,87 @@
 {
   "version": 2,
-  "projects": {},
+  "projects": {
+    "cli": {
+      "root": "packages/cli",
+      "sourceRoot": "packages/cli/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/cli/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/cli"],
+          "options": {
+            "jestConfig": "packages/cli/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "buildOriginal": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/cli",
+            "tsConfig": "packages/cli/tsconfig.lib.json",
+            "packageJson": "packages/cli/package.json",
+            "main": "packages/cli/src/index.ts",
+            "assets": ["packages/cli/*.md"],
+            "cli": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "nx buildOriginal cli"
+              },
+              {
+                "command": "node ./tools/update-cli-bin-name.js"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "pulumi-cloud-mock": {
+      "root": "packages/pulumi-cloud-mock",
+      "sourceRoot": "packages/pulumi-cloud-mock/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/pulumi-cloud-mock",
+            "tsConfig": "packages/pulumi-cloud-mock/tsconfig.lib.json",
+            "packageJson": "packages/pulumi-cloud-mock/package.json",
+            "main": "packages/pulumi-cloud-mock/src/index.ts",
+            "assets": ["packages/pulumi-cloud-mock/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/pulumi-cloud-mock/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/pulumi-cloud-mock"],
+          "options": {
+            "jestConfig": "packages/pulumi-cloud-mock/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/node"
   }
 }

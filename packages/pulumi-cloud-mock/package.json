@@ -1,0 +1,20 @@
+{
+  "name": "@getcoconut/pulumi-cloud-mock",
+  "version": "v1.0.0-alpha.1",
+  "description": "An implementation of the Pulumi Cloud framework for mocking and local testing.",
+  "homepage": "https://getcoconut.io",
+  "license": "MIT",
+  "bugs": "https://github.com/getcoconut/coconut/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcoconut/coconut.git",
+    "directory": "packages/pulumi-cloud-mock"
+  },
+  "keywords": [
+    "Cloud",
+    "Pulumi Cloud",
+    "Mocking",
+    "Local testing",
+    "Serverless"
+  ]
+}
