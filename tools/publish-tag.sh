@@ -20,7 +20,6 @@ fi
 TAG=$1
 PACKAGE=`echo $TAG | sed -rn 's/'$REGEX'/\2/p'`
 VERSION=`echo $TAG | sed -rn 's/'$REGEX'/\3/p'`
-PRE_RELEASE=`echo $TAG | sed -rn 's/'$REGEX'/\5/p'`
 
 if [ -z $PACKAGE ]; then
   echo "ERROR: Invalid git tag format!"
@@ -28,6 +27,11 @@ if [ -z $PACKAGE ]; then
 fi
 
 DIST="dist/packages/$PACKAGE"
+
+echo
+echo "Buildind $PACKAGE..."
+yarn build $PACKAGE || exit 1
+
 VERSION_COUNT=`grep -c "^  \"version\": \"$VERSION\",$" "$DIST/package.json"`
 
 if [ "$VERSION_COUNT" -ne 1 ]; then
@@ -36,11 +40,7 @@ if [ "$VERSION_COUNT" -ne 1 ]; then
 fi
 
 echo
-echo "Buildind $PACKAGE..."
-yarn build $PACKAGE || exit 1
-
-echo
 echo "Publishing $PACKAGE..."
 cp npmrc "$DIST/.npmrc"
 cd $DIST
-npm publish --tag ${PRE_RELEASE:=latest} --access public
+npm publish --access public
