@@ -16,3 +16,5 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: ./tools/publish-tag.sh ${{ github.ref }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
