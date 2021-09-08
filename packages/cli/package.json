@@ -1,6 +1,6 @@
 {
   "name": "@getcoconut/cli",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.1",
   "description": "A tool for locally emulating and mocking Pulumi Cloud projects.",
   "homepage": "https://getcoconut.io",
   "license": "MIT",
