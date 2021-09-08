@@ -20,7 +20,6 @@ fi
 TAG=$1
 PACKAGE=`echo $TAG | sed -rn 's/'$REGEX'/\2/p'`
 VERSION=`echo $TAG | sed -rn 's/'$REGEX'/\3/p'`
-PRE_RELEASE=`echo $TAG | sed -rn 's/'$REGEX'/\5/p'`
 
 if [ -z $PACKAGE ]; then
   echo "ERROR: Invalid git tag format!"
@@ -44,4 +43,4 @@ echo
 echo "Publishing $PACKAGE..."
 cp npmrc "$DIST/.npmrc"
 cd $DIST
-npm publish --tag ${PRE_RELEASE:=latest} --access public
+npm publish --access public
