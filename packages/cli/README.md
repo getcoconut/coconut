@@ -4,7 +4,7 @@ Coconut CLI is a tool for locally emulating and mocking [Pulumi Cloud Framework]
 
 > Note: This tool is meant to work with pure PCF projects. So if your project uses other Pulumi resources you can't use it with the Coconut CLI.
 
-> Note: Check the [Pulumi Cloud Mock Provider](../pulumi-cloud-mock) for details about the supported resources.
+> Note: Check the [Pulumi Cloud Mock Provider](https://www.npmjs.com/package/@getcoconut/pulumi-cloud-mock) for details about the supported resources.
 
 ## Getting started
 

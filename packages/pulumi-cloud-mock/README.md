@@ -1,10 +1,10 @@
 # Pulumi Cloud Mock Provider
 
-An implementation of the [Pulumi Cloud Framework](https://github.com/pulumi/pulumi-cloud) (PCF) used by the [Coconut CLI](../cli) for mocking and emulating resources locally.
+An implementation of the [Pulumi Cloud Framework](https://github.com/pulumi/pulumi-cloud) (PCF) used by the [Coconut CLI](https://www.npmjs.com/package/@getcoconut/cli) for mocking and emulating resources locally.
 
 ## Getting started
 
-Check the [Coconut CLI](../cli) documentation for usage details.
+Check the [Coconut CLI](https://www.npmjs.com/package/@getcoconut/cli) documentation for usage details.
 
 ## PCF API implementation status
 
