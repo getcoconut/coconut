@@ -28,16 +28,17 @@ if [ -z $PACKAGE ]; then
 fi
 
 DIST="dist/packages/$PACKAGE"
+
+echo
+echo "Buildind $PACKAGE..."
+yarn build $PACKAGE || exit 1
+
 VERSION_COUNT=`grep -c "^  \"version\": \"$VERSION\",$" "$DIST/package.json"`
 
 if [ "$VERSION_COUNT" -ne 1 ]; then
   echo "ERROR: Tag version doesn't match version in package.json!"
   exit 1
 fi
-
-echo
-echo "Buildind $PACKAGE..."
-yarn build $PACKAGE || exit 1
 
 echo
 echo "Publishing $PACKAGE..."
