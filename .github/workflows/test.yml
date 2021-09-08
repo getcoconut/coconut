@@ -1,4 +1,4 @@
-name: Coconut CI
+name: Test
 
 on:
   push:
