@@ -1,6 +1,6 @@
 {
   "name": "@getcoconut/pulumi-cloud-mock",
-  "version": "0.0.1",
+  "version": "v1.0.0-alpha.1",
   "description": "An implementation of the Pulumi Cloud framework for mocking and local testing.",
   "homepage": "https://getcoconut.io",
   "license": "MIT",
