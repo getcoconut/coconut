@@ -1,3 +1,7 @@
+// This example is kept intentionally very simple, without data validation
+// and error handling, so please don't use as a reference for your production
+// code!
+
 import cloud = require('@pulumi/cloud');
 import express = require('express');
 import { v4 as uuidv4 } from 'uuid';
