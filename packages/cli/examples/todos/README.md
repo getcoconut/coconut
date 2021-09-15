@@ -29,3 +29,14 @@ Once the services are ready, you will see the url of the local HTTP Server on th
 ```
 
 Now you can use your preferred REST client to test the API by making requests to `<api url>/todos`. If you make any code changes, you must stop (Ctrl-C) the Coconut CLI and re-run it to apply them (hot reloading is in our roadmap).
+
+## Deployment
+
+After finnishing local testing, you can deploy your app to the cloud using the usual Pulumi processes.
+
+To deploy to AWS for example:
+
+```sh
+$ pulumi config set cloud:provider aws
+$ AWS_PROFILE=<aws profile name> pulumi up
+```
