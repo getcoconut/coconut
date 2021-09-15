@@ -4,7 +4,7 @@
 
 import cloud = require('@pulumi/cloud');
 import express = require('express');
-import { v4 as uuidv4 } from 'uuid';
+import { uuid } from 'uuidv4';
 
 const todosTable = new cloud.Table('todos');
 
@@ -20,7 +20,7 @@ const server = new cloud.HttpServer('api', () => {
   });
 
   app.post('/todos', async (req, res) => {
-    const todo = { id: uuidv4(), ...req.body };
+    const todo = { id: uuid(), ...req.body };
 
     await todosTable.insert(todo);
 
