@@ -20,4 +20,4 @@ Once the PCF program is executed and the resources are ready, the outputs export
 
 ## Examples
 
-Check the [examples folder](/packages/cli/examples) for some example projects to get you started.
+Check the [examples folder](./examples) for some example projects to get you started.
