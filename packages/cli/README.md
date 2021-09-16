@@ -17,3 +17,7 @@ $ npx coconut mock
 ```
 
 Once the PCF program is executed and the resources are ready, the outputs exported by the program will be printed on the screen and you can use them for testing. An example of these outputs are the URLs of the HTTP Server resources created by the program.
+
+## Examples
+
+Check the [examples folder](/packages/cli/examples) for some example projects to get you started.
