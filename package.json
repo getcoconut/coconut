@@ -34,6 +34,7 @@
     "@pulumi/pulumi": "^3.10.2",
     "fs-extra": "^10.0.0",
     "module-alias": "^2.2.2",
+    "ts-node": "^10.2.1",
     "tslib": "^2.0.0",
     "uniqid": "^5.4.0",
     "yargs": "^17.1.1"
@@ -62,7 +63,6 @@
     "node-fetch": "^2.6.1",
     "prettier": "^2.3.1",
     "ts-jest": "27.0.3",
-    "ts-node": "~9.1.1",
     "typescript": "~4.3.5"
   }
 }

@@ -19,6 +19,7 @@
     "CLI"
   ],
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "ts-node": "^10.2.1"
   }
 }
