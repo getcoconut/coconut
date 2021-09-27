@@ -6,7 +6,7 @@ Coconut provides tools to make serverless development around the [Pulumi Cloud F
 
 ## Packages
 
-Coconut consists of multiple pakcages that work together and that are all hosted in this monorep. Here is the list of the packages and their purposes:
+Coconut consists of multiple packages that work together and that are all hosted in this monorep. Here is the list of the packages and their purposes:
 
 | Name                                                       | Description                                             |
 | ---------------------------------------------------------- | ------------------------------------------------------- |
