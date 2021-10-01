@@ -1,12 +1,16 @@
 import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
+import config = require('../lib/config');
 
 import mockProgram = require('../lib/mock/pulumiProgram');
+import { getOutputTargetFile } from '../lib/utils';
 import mockCmd = require('./mock');
 
 jest.mock('../lib/mock/pulumiProgram');
+jest.mock('../lib/config');
 
+const mockedConfig = config as jest.Mocked<typeof config>;
 const mockedMockProgram = mockProgram as jest.Mocked<typeof mockProgram>;
 
 describe('Mock command', () => {
@@ -29,8 +33,21 @@ describe('Mock command', () => {
   });
 
   it('Runs the Pulumi program with the correct project file', async () => {
+    const output = { res1: 'value 1', res2: 'value 2' };
     const projectFile = path.join(projectPath, 'index.ts');
-    const pulumiProgram = jest.fn();
+
+    const targets = [
+      path.resolve(projectPath, 'target1'),
+      path.resolve(projectPath, 'target2'),
+    ];
+
+    const targetFiles = targets.map((target) =>
+      getOutputTargetFile(target, 'mock')
+    );
+
+    const pulumiProgram = jest.fn().mockReturnValue(output);
+
+    mockedConfig.get.mockReturnValue({ output: { targets } });
 
     mockedMockProgram.pulumiProgram.mockImplementation(() => pulumiProgram);
     fs.ensureFileSync(projectFile);
@@ -39,5 +56,11 @@ describe('Mock command', () => {
 
     expect(mockedMockProgram.pulumiProgram).toHaveBeenCalledWith(projectFile);
     expect(pulumiProgram).toHaveBeenCalledTimes(1);
+
+    targetFiles.forEach((targetFile) => {
+      const content = fs.readJSONSync(targetFile);
+
+      expect(content).toEqual(expect.objectContaining(output));
+    });
   }, 30000);
 });

@@ -7,6 +7,8 @@ import { LocalWorkspace, OutputMap, Stack } from '@pulumi/pulumi/automation';
 
 import { pulumiProgram } from '../lib/mock/pulumiProgram';
 import { CustomError } from '../lib/errors';
+import * as config from '../lib/config';
+import { getOutputTargetFile } from '../lib/utils';
 
 export const command = 'mock [dir]';
 export const desc = 'Mock a Pulumi Cloud project.';
@@ -52,8 +54,25 @@ export const handler = async function (argv) {
   await stack.setConfig('cloud:provider', { value: 'mock' });
 
   const result = await stack.up();
+  const outputs = unmarshalOutputs(result.outputs);
 
-  console.log(JSON.stringify(unmarshalOutputs(result.outputs), null, 4));
+  // write outputs to configured output targets
+  config.get().output?.targets?.forEach((target) => {
+    const targetFile = getOutputTargetFile(target, 'mock');
+
+    try {
+      process.stdout.write(`Writing outputs to ${targetFile}...`);
+      fs.outputJSONSync(targetFile, outputs, { spaces: 2 });
+      console.log('done.');
+    } catch (err) {
+      console.log('failed!');
+
+      throw new CustomError(err.message);
+    }
+  });
+
+  // write outputs to console
+  console.log(JSON.stringify(outputs, null, 4));
 };
 
 function unmarshalOutputs(outputs: OutputMap) {
