@@ -1,18 +1,33 @@
 {
+  "title": "Config",
+  "description": "Coconut CLI configuration.",
+  "examples": [
+    {
+      "output": {
+        "targets": [
+          "apps/user-app/src",
+          "apps/admin-app/src",
+          "apps/mobile-app/src/assets"
+        ]
+      }
+    }
+  ],
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "output": {
+      "description": "Configure the Pulumi output behaviour.",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "targets": {
+          "description": "Target folders to write output to.",
           "type": "array",
           "items": { "type": "string" },
           "nullable": true
         }
       },
-      "nullable": true,
-      "additionalProperties": false
+      "nullable": true
     }
-  },
-  "additionalProperties": false
+  }
 }
