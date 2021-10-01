@@ -1,10 +1,17 @@
 {
   "name": "todos",
+  "scripts": {
+    "mock": "npx coconut mock",
+    "start:user": "npx nodemon apps/user-app/src/index.ts",
+    "start:admin": "npx nodemon apps/admin-app/src/index.ts",
+    "start:mobile": "npx nodemon apps/mobile-app/src/index.ts"
+  },
   "devDependencies": {
     "@getcoconut/cli": "*",
     "@getcoconut/pulumi-cloud-mock": "*",
     "@types/express": "^4.17.13",
-    "@types/node": "^10.0.0"
+    "@types/node": "^10.0.0",
+    "nodemon": "^2.0.13"
   },
   "dependencies": {
     "@pulumi/cloud": "^0.30.1",
