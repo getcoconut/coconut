@@ -33,13 +33,13 @@
     "@pulumi/cloud": "^0.30.1",
     "@pulumi/pulumi": "^3.10.2",
     "ajv": "^8.6.3",
+    "commander": "^8.2.0",
     "config": "^3.3.6",
     "fs-extra": "^10.0.0",
     "module-alias": "^2.2.2",
     "ts-node": "^10.2.1",
     "tslib": "^2.0.0",
-    "uniqid": "^5.4.0",
-    "yargs": "^17.1.1"
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@nrwl/cli": "12.9.0",

@@ -1,27 +1,23 @@
 import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
-
 import uniqid = require('uniqid');
 import { LocalWorkspace, OutputMap, Stack } from '@pulumi/pulumi/automation';
+import { Command } from 'commander';
 
-import { pulumiProgram } from '../lib/mock/pulumiProgram';
-import { CustomError } from '../lib/errors';
-import * as config from '../lib/config';
-import { getOutputTargetFile } from '../lib/utils';
+import { CustomError } from '../errors';
+import * as config from '../config';
+import { getOutputTargetFile } from '../utils';
 
-export const command = 'mock [dir]';
-export const desc = 'Mock a Pulumi Cloud project.';
+import { pulumiProgram } from './mock/pulumiProgram';
 
-export const builder = {
-  dir: {
-    default: '.',
-    string: true,
-  },
-};
+export const command = new Command('mock')
+  .description('mock a Pulumi Cloud project')
+  .option('-p, --project <dir>', 'Project directory', '.')
+  .action(action);
 
-export const handler = async function (argv) {
-  const projectPath = path.resolve(argv.dir);
+export async function action(options) {
+  const projectPath = path.resolve(options.project);
   const projectName = path.basename(projectPath);
   const projectFile = path.join(projectPath, 'index.ts');
 
@@ -73,7 +69,7 @@ export const handler = async function (argv) {
 
   // write outputs to console
   console.log(JSON.stringify(outputs, null, 4));
-};
+}
 
 function unmarshalOutputs(outputs: OutputMap) {
   const unmarashled = Object.keys(outputs).reduce((unmarashled, key) => {

@@ -1,11 +1,11 @@
 import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
-import config = require('../lib/config');
+import config = require('../config');
 
-import mockProgram = require('../lib/mock/pulumiProgram');
-import { getOutputTargetFile } from '../lib/utils';
-import mockCmd = require('./mock');
+import mockProgram = require('./mock/pulumiProgram');
+import { getOutputTargetFile } from '../utils';
+import { action } from './mock';
 
 jest.mock('../lib/mock/pulumiProgram');
 jest.mock('../lib/config');
@@ -27,7 +27,7 @@ describe('Mock command', () => {
   });
 
   it('Fails if project file not found', async () => {
-    expect(mockCmd.handler({ dir: projectPath })).rejects.toThrow(
+    expect(action({ project: projectPath })).rejects.toThrow(
       /Project file not found/
     );
   });
@@ -52,7 +52,7 @@ describe('Mock command', () => {
     mockedMockProgram.pulumiProgram.mockImplementation(() => pulumiProgram);
     fs.ensureFileSync(projectFile);
 
-    await mockCmd.handler({ dir: projectPath });
+    await action({ project: projectPath });
 
     expect(mockedMockProgram.pulumiProgram).toHaveBeenCalledWith(projectFile);
     expect(pulumiProgram).toHaveBeenCalledTimes(1);
