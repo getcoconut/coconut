@@ -13,7 +13,7 @@ import { pulumiProgram } from './mock/pulumiProgram';
 
 export const command = new Command('mock')
   .description('mock a Pulumi Cloud project')
-  .option('-p, --project <dir>', 'Project directory', '.')
+  .option('-p, --project <dir>', 'project directory', '.')
   .action(action);
 
 export async function action(options) {
@@ -25,10 +25,10 @@ export async function action(options) {
     path.join(os.tmpdir(), `coconut-${projectName}-`)
   );
 
-  console.log(`Mocking project at ${projectFile}...`);
+  console.info(`mocking project ${projectFile}...`);
 
   if (!fs.pathExistsSync(projectFile)) {
-    throw new CustomError('Project file not found.');
+    throw new CustomError('project file does not exist');
   }
 
   fs.ensureDirSync(tempPath);
@@ -57,18 +57,18 @@ export async function action(options) {
     const targetFile = getOutputTargetFile(target, 'mock');
 
     try {
-      process.stdout.write(`Writing outputs to ${targetFile}...`);
+      process.stdout.write(`writing outputs to ${targetFile}...`);
       fs.outputJSONSync(targetFile, outputs, { spaces: 2 });
-      console.log('done.');
+      console.info('done.');
     } catch (err) {
-      console.log('failed!');
+      console.info('failed!');
 
       throw new CustomError(err.message);
     }
   });
 
   // write outputs to console
-  console.log(JSON.stringify(outputs, null, 4));
+  console.info(JSON.stringify(outputs, null, 4));
 }
 
 function unmarshalOutputs(outputs: OutputMap) {
