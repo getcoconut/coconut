@@ -2,12 +2,11 @@ import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
 import uniqid = require('uniqid');
-import { LocalWorkspace, OutputMap, Stack } from '@pulumi/pulumi/automation';
+import { LocalWorkspace, Stack } from '@pulumi/pulumi/automation';
 import { Command } from 'commander';
 
 import { CustomError } from '../errors';
-import * as config from '../config';
-import { getOutputTargetFile } from '../utils';
+import { unmarshalOutputs, writeOutputs } from '../utils';
 
 import { pulumiProgram } from './mock/pulumiProgram';
 
@@ -53,30 +52,8 @@ export async function action(options) {
   const outputs = unmarshalOutputs(result.outputs);
 
   // write outputs to configured outputs targets
-  config.get().outputs?.targets?.forEach((target) => {
-    const targetFile = getOutputTargetFile(target, 'mock');
-
-    try {
-      process.stdout.write(`writing outputs to ${targetFile}...`);
-      fs.outputJSONSync(targetFile, outputs, { spaces: 2 });
-      console.info('done.');
-    } catch (err) {
-      console.info('failed!');
-
-      throw new CustomError(err.message);
-    }
-  });
+  writeOutputs(outputs, 'mock');
 
   // write outputs to console
   console.info(JSON.stringify(outputs, null, 4));
-}
-
-function unmarshalOutputs(outputs: OutputMap) {
-  const unmarashled = Object.keys(outputs).reduce((unmarashled, key) => {
-    unmarashled[key] = outputs[key]?.value;
-
-    return unmarashled;
-  }, {});
-
-  return unmarashled;
 }

@@ -2,7 +2,10 @@ import fs = require('fs-extra');
 import path = require('path');
 import { Command } from 'commander';
 import { LocalProgramArgs, LocalWorkspace } from '@pulumi/pulumi/automation';
+
+import * as config from '../config';
 import { CustomError } from '../errors';
+import { unmarshalOutputs, writeOutputs } from '../utils';
 
 export const command = new Command('outputs')
   .description("write a Pulumi Cloud project's outputs to outputs targets")
@@ -24,13 +27,19 @@ export async function action(options) {
     throw new CustomError('project directory does not exist');
   }
 
+  if (!config.get().outputs?.targets?.length) {
+    console.warn('No outputs targets defined in config!');
+
+    return;
+  }
+
   const stack = await LocalWorkspace.selectStack(args);
 
-  console.info('refreshing stack...');
+  process.stdout.write('refreshing stack...');
   await stack.refresh();
-  console.info('refresh complete');
+  console.info('done.');
 
   const outputs = await stack.outputs();
 
-  console.log(outputs);
+  writeOutputs(unmarshalOutputs(outputs), options.stack);
 }
