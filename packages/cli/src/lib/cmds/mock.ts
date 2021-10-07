@@ -16,11 +16,11 @@ export const command = new Command('mock')
   .action(action);
 
 export async function action(options) {
-  const projectPath = path.resolve(options.project);
-  const projectName = path.basename(projectPath);
-  const projectFile = path.join(projectPath, 'index.ts');
+  const projectDir = path.resolve(options.project);
+  const projectName = path.basename(projectDir);
+  const projectFile = path.join(projectDir, 'index.ts');
 
-  const tempPath = fs.mkdtempSync(
+  const tempDir = fs.mkdtempSync(
     path.join(os.tmpdir(), `coconut-${projectName}-`)
   );
 
@@ -30,13 +30,13 @@ export async function action(options) {
     throw new CustomError('project file does not exist');
   }
 
-  fs.ensureDirSync(tempPath);
+  fs.ensureDirSync(tempDir);
 
   const workspace = await LocalWorkspace.create({
     projectSettings: {
       name: projectName,
       runtime: 'nodejs',
-      backend: { url: `file://${tempPath}` },
+      backend: { url: `file://${tempDir}` },
     },
     envVars: {
       PULUMI_CONFIG_PASSPHRASE: uniqid(),

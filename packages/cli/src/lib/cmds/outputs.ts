@@ -14,16 +14,16 @@ export const command = new Command('outputs')
   .action(action);
 
 export async function action(options) {
-  const projectPath = path.resolve(options.project);
+  const projectDir = path.resolve(options.project);
 
   const args: LocalProgramArgs = {
     stackName: options.stack,
-    workDir: projectPath,
+    workDir: projectDir,
   };
 
-  console.info(`processing outputs of ${projectPath}...`);
+  console.info(`processing outputs of ${projectDir}...`);
 
-  if (!fs.pathExistsSync(projectPath)) {
+  if (!fs.pathExistsSync(projectDir)) {
     throw new CustomError('project directory does not exist');
   }
 
