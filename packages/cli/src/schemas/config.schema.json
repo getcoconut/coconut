@@ -3,7 +3,7 @@
   "description": "Coconut CLI configuration.",
   "examples": [
     {
-      "output": {
+      "outputs": {
         "targets": [
           "apps/user-app/src",
           "apps/admin-app/src",
@@ -15,13 +15,13 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "output": {
-      "description": "Configure the Pulumi output behaviour.",
+    "outputs": {
+      "description": "Configure the Pulumi outputs handling.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "targets": {
-          "description": "Target folders to write output to.",
+          "description": "Target folders to write outputs to.",
           "type": "array",
           "items": { "type": "string" },
           "nullable": true

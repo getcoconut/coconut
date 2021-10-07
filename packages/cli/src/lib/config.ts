@@ -15,7 +15,7 @@ export const MAIN_KEY = '@getcoconut/cli';
 const SCHEMA: JSONSchemaType<Config> = require('../schemas/config.schema.json');
 
 export interface Config {
-  output?: {
+  outputs?: {
     targets?: string[];
   };
 }

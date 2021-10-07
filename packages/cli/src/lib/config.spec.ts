@@ -41,7 +41,7 @@ describe('config', () => {
   });
 
   it('loads a valid config', () => {
-    const cfg = { output: { targets: ['target 1', 'target 2'] } };
+    const cfg = { outputs: { targets: ['target 1', 'target 2'] } };
 
     nodeConfig.has.mockReturnValue(true);
     nodeConfig.get.mockImplementation(mockConfigGetter(cfg));

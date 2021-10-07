@@ -5,8 +5,8 @@ import { LocalProgramArgs, LocalWorkspace } from '@pulumi/pulumi/automation';
 import { CustomError } from '../errors';
 
 export const command = new Command('outputs')
-  .description("write a Pulumi Cloud project's outputs to output targets")
-  .requiredOption('-s, --stack <stack>', 'stack to get output from')
+  .description("write a Pulumi Cloud project's outputs to outputs targets")
+  .requiredOption('-s, --stack <stack>', 'stack to get outputs from')
   .option('-p, --project <dir>', 'project directory', '.')
   .action(action);
 

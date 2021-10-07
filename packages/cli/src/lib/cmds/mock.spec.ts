@@ -34,7 +34,7 @@ describe('Mock command', () => {
   });
 
   it('Runs the Pulumi program with the correct project file', async () => {
-    const output = { res1: 'value 1', res2: 'value 2' };
+    const outputs = { res1: 'value 1', res2: 'value 2' };
     const projectFile = path.join(projectPath, 'index.ts');
 
     const targets = [
@@ -46,9 +46,9 @@ describe('Mock command', () => {
       getOutputTargetFile(target, 'mock')
     );
 
-    const pulumiProgram = jest.fn().mockReturnValue(output);
+    const pulumiProgram = jest.fn().mockReturnValue(outputs);
 
-    mockedConfig.get.mockReturnValue({ output: { targets } });
+    mockedConfig.get.mockReturnValue({ outputs: { targets } });
 
     mockedMockProgram.pulumiProgram.mockImplementation(() => pulumiProgram);
     fs.ensureFileSync(projectFile);
@@ -61,7 +61,7 @@ describe('Mock command', () => {
     targetFiles.forEach((targetFile) => {
       const content = fs.readJSONSync(targetFile);
 
-      expect(content).toEqual(expect.objectContaining(output));
+      expect(content).toEqual(expect.objectContaining(outputs));
     });
   }, 30000);
 });

@@ -52,8 +52,8 @@ export async function action(options) {
   const result = await stack.up();
   const outputs = unmarshalOutputs(result.outputs);
 
-  // write outputs to configured output targets
-  config.get().output?.targets?.forEach((target) => {
+  // write outputs to configured outputs targets
+  config.get().outputs?.targets?.forEach((target) => {
     const targetFile = getOutputTargetFile(target, 'mock');
 
     try {
