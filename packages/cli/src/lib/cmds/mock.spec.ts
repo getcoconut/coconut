@@ -1,14 +1,15 @@
 import fs = require('fs-extra');
 import os = require('os');
 import path = require('path');
+
 import config = require('../config');
+import { getOutputTargetFile } from '../utils';
 
 import mockProgram = require('./mock/pulumiProgram');
-import { getOutputTargetFile } from '../utils';
 import { action } from './mock';
 
-jest.mock('../lib/mock/pulumiProgram');
 jest.mock('../lib/config');
+jest.mock('./mock/pulumiProgram');
 
 const mockedConfig = config as jest.Mocked<typeof config>;
 const mockedMockProgram = mockProgram as jest.Mocked<typeof mockProgram>;
@@ -28,7 +29,7 @@ describe('Mock command', () => {
 
   it('Fails if project file not found', async () => {
     expect(action({ project: projectPath })).rejects.toThrow(
-      /Project file not found/
+      /project file does not exist/
     );
   });
 
