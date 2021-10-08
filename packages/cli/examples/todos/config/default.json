@@ -1,6 +1,6 @@
 {
   "@getcoconut/cli": {
-    "output": {
+    "outputs": {
       "targets": [
         "apps/user-app/src",
         "apps/admin-app/src",

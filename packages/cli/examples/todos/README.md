@@ -4,7 +4,7 @@ This is an example [Pulumi Cloud Framework](https://github.com/pulumi/pulumi-clo
 
 It implements a simple API that uses a DB table to manage todos (actually any JSON objects). It uses the `HttpServer` and `Table` resources from PCF.
 
-The project is also configured with dummy client apps to show how to use the program output. These are located in the `apps` folder and their source folders are configured as output targets (see `config/default.json`).
+The project is also configured with dummy client apps to show how to use the program outputs. These are located in the `apps` folder and their source folders are configured as outputs targets (see `config/default.json`).
 
 ## Setup
 
@@ -22,7 +22,7 @@ Run the Coconut CLI with the `mock` command to emulate your project locally:
 $ npx coconut mock
 ```
 
-Once the services are ready, the output will be written to the configured output targets and printed on the console, e.g.:
+Once the services are ready, the outputs will be written to the configured outputs targets and printed on the console, e.g.:
 
 ```json
 {
@@ -30,7 +30,7 @@ Once the services are ready, the output will be written to the configured output
 }
 ```
 
-Now start one of the client apps which will write the loaded output to the console, e.g. to start the admin app:
+Now start one of the client apps which will write the loaded outputs to the console, e.g. to start the admin app:
 
 ```sh
 $ npm run start:admin
