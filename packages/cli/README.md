@@ -24,29 +24,34 @@ Check the [examples folder](./examples) for some example projects to get you sta
 
 ## Configuration
 
-The Coconut CLI uses the [config npm package](https://www.npmjs.com/package/config) for loading its configuration. To set yours, create your configuration files as described in ["Configuration Files"](https://github.com/lorenwest/node-config/wiki/Configuration-Files) and add the Coconut CLI configuration in the key `@getcoconut/cli`.
+Coconut uses [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) for configuration file support. This means you can configure Coconut via (in order of precedence):
+
+- a `coconut` key in your package.json file
+- a `.coconutrc` file written in JSON or YAML
+- a `.coconutrc.json`, `.coconutrc.yaml` or `.coconutrc.yml` file
+- a `.coconutrc.js`, `.coconutrc.cjs`, `coconut.config.js` or `coconut.config.cjs` file that exports an object using `module.exports`
+
+The configuration file will be resolved starting from the current working directory or the project directory specified by the `-p` option, and searching up the file tree until a config file is (or isn’t) found.
 
 ### Example
 
-File `config/default.json`:
+File `.coconutrc.json`:
 
 ```json
 {
-  "@getcoconut/cli": {
-    "outputs": {
-      "targets": [
-        "apps/user-app/src",
-        "apps/admin-app/src",
-        "apps/mobile-app/src"
-      ]
-    }
+  "outputs": {
+    "targets": [
+      "apps/user-app/src",
+      "apps/admin-app/src",
+      "apps/mobile-app/src"
+    ]
   }
 }
 ```
 
 ### Options
 
-Here are the available options, where every option is identified by its full path inside of the `@getcoconut/cli` key.
+Here are the available options, where every option is identified by its full path.
 
 #### `outputs/targets`
 

@@ -4,7 +4,7 @@ This is an example [Pulumi Cloud Framework](https://github.com/pulumi/pulumi-clo
 
 It implements a simple API that uses a DB table to manage todos (actually any JSON objects). It uses the `HttpServer` and `Table` resources from PCF.
 
-The project is also configured with dummy client apps to show how to use the program outputs. These are located in the `apps` folder and their source folders are configured as outputs targets (see `config/default.json`).
+The project is also configured with dummy client apps to show how to use the program outputs. These are located in the `apps` folder and their source folders are configured as outputs targets (see `.coconutrc.json`).
 
 ## Setup
 
