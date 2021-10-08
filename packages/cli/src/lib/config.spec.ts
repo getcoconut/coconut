@@ -1,52 +1,57 @@
+import fs = require('fs-extra');
+import os = require('os');
+import path = require('path');
+
 import * as config from './config';
 
-jest.mock('config');
-
-process.env.NODE_CONFIG_ENV = 'development';
-process.env.SUPPRESS_NO_CONFIG_WARNING = 'x';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nodeConfig = require('config');
-
-// make sure we get the config from the right key
-function mockConfigGetter(cfg: unknown) {
-  return function getConfig(key: string) {
-    if (key === config.MAIN_KEY) {
-      return cfg;
-    }
-
-    throw new Error(`Invalid key '${key}' used when reading config.`);
-  };
-}
-
 describe('config', () => {
-  afterEach(() => {
-    jest.resetAllMocks();
+  let projectDir: string;
+  let configFile: string;
+
+  beforeEach(() => {
+    projectDir = fs.mkdtempSync(path.join(os.tmpdir(), `coconut-test-`));
+    configFile = path.join(projectDir, '.coconutrc.json');
+
+    fs.ensureDirSync(projectDir);
   });
 
-  it('is an empty object if config is not defined', () => {
-    nodeConfig.has.mockReturnValue(false);
+  afterEach(() => {
+    jest.resetAllMocks();
+    fs.removeSync(projectDir);
+  });
 
-    config.load();
+  it('is an empty object if no config found', () => {
+    config.load(projectDir);
+
     expect(config.get()).toEqual({});
+  });
+
+  it('throws when loading a bad structured config', () => {
+    fs.writeFileSync(configFile, '{');
+
+    expect(() => config.load(projectDir)).toThrow(
+      /Error parsing Coconut configuration file/
+    );
   });
 
   it('throws when loading an invalid config', () => {
     const cfg = { unknown: 1 };
 
-    nodeConfig.has.mockReturnValue(true);
-    nodeConfig.get.mockImplementation(mockConfigGetter(cfg));
+    fs.writeJSONSync(configFile, cfg);
 
-    expect(config.load).toThrow(/Invalid Coconut configuration/);
+    expect(() => config.load(projectDir)).toThrow(
+      /Invalid Coconut configuration/
+    );
   });
 
   it('loads a valid config', () => {
-    const cfg = { outputs: { targets: ['target 1', 'target 2'] } };
+    const cfg = {
+      outputs: { targets: ['target 1', 'target 2'] },
+    };
 
-    nodeConfig.has.mockReturnValue(true);
-    nodeConfig.get.mockImplementation(mockConfigGetter(cfg));
+    fs.writeJSONSync(configFile, cfg);
 
-    config.load();
+    config.load(projectDir);
 
     expect(config.get()).toEqual(expect.objectContaining(cfg));
   });

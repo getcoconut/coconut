@@ -28,7 +28,7 @@ describe('Mock command', () => {
   });
 
   it('Fails if project file not found', async () => {
-    expect(action({ project: projectDir })).rejects.toThrow(
+    expect(action({ projectDir })).rejects.toThrow(
       /project file does not exist/
     );
   });
@@ -53,7 +53,7 @@ describe('Mock command', () => {
     mockedMockProgram.pulumiProgram.mockImplementation(() => pulumiProgram);
     fs.ensureFileSync(projectFile);
 
-    await action({ project: projectDir });
+    await action({ projectDir });
 
     expect(mockedMockProgram.pulumiProgram).toHaveBeenCalledWith(projectFile);
     expect(pulumiProgram).toHaveBeenCalledTimes(1);

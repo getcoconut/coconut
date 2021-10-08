@@ -30,12 +30,6 @@ describe('Outputs command', () => {
     fs.removeSync(projectDir);
   });
 
-  it('Fails if project directory not found', async () => {
-    expect(action({ project: `${projectDir}-invalid` })).rejects.toThrow(
-      /project directory does not exist/
-    );
-  });
-
   it('Writes the outputs to the outputs targets', async () => {
     const stackName = 'test';
 
@@ -62,7 +56,7 @@ describe('Outputs command', () => {
 
     mockedConfig.get.mockReturnValue({ outputs: { targets } });
 
-    await action({ stack: stackName, project: projectDir });
+    await action({ projectDir, stack: stackName });
 
     expect(stack.refresh).toHaveBeenCalledTimes(1);
     expect(stack.outputs).toHaveBeenCalledTimes(1);

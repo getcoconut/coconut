@@ -12,13 +12,11 @@ import { pulumiProgram } from './mock/pulumiProgram';
 
 export const command = new Command('mock')
   .description('mock a Pulumi Cloud project')
-  .option('-p, --project <dir>', 'project directory', '.')
   .action(action);
 
 export async function action(options) {
-  const projectDir = path.resolve(options.project);
-  const projectName = path.basename(projectDir);
-  const projectFile = path.join(projectDir, 'index.ts');
+  const projectName = path.basename(options.projectDir);
+  const projectFile = path.join(options.projectDir, 'index.ts');
 
   const tempDir = fs.mkdtempSync(
     path.join(os.tmpdir(), `coconut-${projectName}-`)

@@ -34,7 +34,7 @@
     "@pulumi/pulumi": "^3.10.2",
     "ajv": "^8.6.3",
     "commander": "^8.2.0",
-    "config": "^3.3.6",
+    "cosmiconfig": "^7.0.1",
     "fs-extra": "^10.0.0",
     "module-alias": "^2.2.2",
     "ts-node": "^10.2.1",
