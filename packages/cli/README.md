@@ -50,8 +50,8 @@ Here are the available options, where every option is identified by its full pat
 
 #### `output/targets`
 
-Defines a list of folders where the output of the `mock` command should be written. These are generally folders that belong to the source code of your client apps that need access to the infrastructure. You would then import these output files and use the data to access the created resources.
+Defines a list of folders where the `mock` and `outputs` commands should write the program outputs. These are generally folders that belong to the source code of your client apps that need access to the infrastructure. You would then import these output files and use the data to access the created resources.
 
-For every target folder, the file that will contain the output will be `<target folder>/coconut/mock.json`.
+For every target folder, the output will be written to the file `<target folder>/coconut/<stack>.json`. For the `mock` command, the stack name is `mock`.
 
 Target folders can be absolute or relative to the folder where the Coconut CLI is executed (current working directory).
