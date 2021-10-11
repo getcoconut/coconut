@@ -30,10 +30,11 @@ Once the services are ready, the outputs will be written to the configured outpu
 }
 ```
 
-Now start one of the client apps which will write the loaded outputs to the console, e.g. to start the admin app:
+Now start one of the client apps which load the mock outputs and write them to the console to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
 
 ```sh
-$ npm run start:admin
+$ cd apps/admin-app
+$ npm run mock
 ```
 
 You can also use your preferred REST client to test the API by making requests to `<api url>/todos`.
@@ -42,11 +43,17 @@ If you make any code changes, you must stop (Ctrl-C) the Coconut CLI and re-run 
 
 ## Deployment
 
-After finishing local testing, you can deploy your app to the cloud using the usual Pulumi processes.
+After finishing local testing, you can deploy your app to the cloud using the usual Pulumi processes. To use the outputs of the deployment in your client apps, use the Coconut `outputs` command to write them to your outputs targets.
 
-To deploy to AWS for example:
+This example project has an npm script called `deploy` that does exactly that: it runs `pulumi up` then `coconut outputs` for the `dev` stack. To try it out, run the following command:
 
 ```sh
-$ pulumi config set cloud:provider aws
-$ AWS_PROFILE=<aws profile name> pulumi up
+$ AWS_PROFILE=<aws profile name> npm run deploy
+```
+
+Now start one of the client apps which load the outputs of the `dev` stack and write them to the console to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
+
+```sh
+$ cd apps/admin-app
+$ npm run dev
 ```

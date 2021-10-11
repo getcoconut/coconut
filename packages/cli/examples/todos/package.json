@@ -2,9 +2,7 @@
   "name": "todos",
   "scripts": {
     "mock": "npx coconut mock",
-    "start:user": "npx nodemon apps/user-app/src/index.ts",
-    "start:admin": "npx nodemon apps/admin-app/src/index.ts",
-    "start:mobile": "npx nodemon apps/mobile-app/src/index.ts"
+    "deploy": "pulumi up -s dev && npx coconut outputs -s dev"
   },
   "devDependencies": {
     "@getcoconut/cli": "*",

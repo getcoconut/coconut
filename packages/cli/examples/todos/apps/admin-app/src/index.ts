@@ -1,4 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const backend = require('./coconut/mock.json');
+import fs = require('fs');
+import path = require('path');
+
+const backendFile = path.join(
+  __dirname,
+  'coconut',
+  `${process.env.STACK}.json`
+);
+
+const backend = JSON.parse(fs.readFileSync(backendFile, { encoding: 'utf-8' }));
 
 console.log('Admin app, backend:', backend);

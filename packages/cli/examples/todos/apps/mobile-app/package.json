@@ -1,3 +1,7 @@
 {
-  "name": "todos-mobile"
+  "name": "todos-mobile",
+  "scripts": {
+    "mock": "STACK=mock npx nodemon src/index.ts",
+    "dev": "STACK=dev npx nodemon src/index.ts"  
+  }
 }
