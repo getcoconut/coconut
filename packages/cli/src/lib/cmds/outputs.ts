@@ -24,7 +24,12 @@ export async function action(options) {
   }
 
   const stack = await LocalWorkspace.selectStack(args);
-  const outputs = await stack.outputs();
+  const outputs = unmarshalOutputs(await stack.outputs());
 
-  writeOutputs(unmarshalOutputs(outputs), options.stack);
+  // write outputs to configured outputs targets
+  writeOutputs(outputs, options.stack);
+
+  // write outputs to console
+  console.info('\noutputs:');
+  console.info(JSON.stringify(outputs, null, 4));
 }
