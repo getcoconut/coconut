@@ -34,7 +34,7 @@ Now start one of the client apps which load the mock outputs and write them to t
 
 ```sh
 $ cd apps/admin-app
-$ npm run mock
+$ npm start
 ```
 
 You can also use your preferred REST client to test the API by making requests to `<api url>/todos`.
@@ -51,9 +51,9 @@ This example project has an npm script called `deploy` that does exactly that: i
 $ AWS_PROFILE=<aws profile name> npm run deploy
 ```
 
-Now start one of the client apps which load the outputs of the `dev` stack and write them to the console to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
+Now start one of the client apps, which load the outputs file and write its content to the console, to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
 
 ```sh
 $ cd apps/admin-app
-$ npm run dev
+$ npm start
 ```

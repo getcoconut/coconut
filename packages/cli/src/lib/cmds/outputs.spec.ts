@@ -43,12 +43,9 @@ describe('Outputs command', () => {
       path.resolve(projectDir, 'target2'),
     ];
 
-    const targetFiles = targets.map((target) =>
-      getOutputTargetFile(target, stackName)
-    );
+    const targetFiles = targets.map((target) => getOutputTargetFile(target));
 
     const stack: Stack = {
-      refresh: jest.fn(),
       outputs: jest.fn().mockResolvedValue(outputs),
     } as unknown as Stack;
 
@@ -58,14 +55,19 @@ describe('Outputs command', () => {
 
     await action({ projectDir, stack: stackName });
 
-    expect(stack.refresh).toHaveBeenCalledTimes(1);
     expect(stack.outputs).toHaveBeenCalledTimes(1);
 
     targetFiles.forEach((targetFile) => {
       const content = fs.readJSONSync(targetFile);
 
       expect(content).toEqual(
-        expect.objectContaining(unmarshalOutputs(outputs))
+        expect.objectContaining({
+          timestamp: expect.stringMatching(
+            /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
+          ),
+          stack: stackName,
+          outputs: unmarshalOutputs(outputs),
+        })
       );
     });
   });

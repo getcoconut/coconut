@@ -42,9 +42,7 @@ describe('Mock command', () => {
       path.resolve(projectDir, 'target2'),
     ];
 
-    const targetFiles = targets.map((target) =>
-      getOutputTargetFile(target, 'mock')
-    );
+    const targetFiles = targets.map((target) => getOutputTargetFile(target));
 
     const pulumiProgram = jest.fn().mockReturnValue(outputs);
 
@@ -61,7 +59,15 @@ describe('Mock command', () => {
     targetFiles.forEach((targetFile) => {
       const content = fs.readJSONSync(targetFile);
 
-      expect(content).toEqual(expect.objectContaining(outputs));
+      expect(content).toEqual(
+        expect.objectContaining({
+          timestamp: expect.stringMatching(
+            /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
+          ),
+          stack: 'mock',
+          outputs,
+        })
+      );
     });
   }, 30000);
 });

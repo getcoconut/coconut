@@ -24,11 +24,6 @@ export async function action(options) {
   }
 
   const stack = await LocalWorkspace.selectStack(args);
-
-  process.stdout.write('refreshing stack...');
-  await stack.refresh();
-  console.info('done.');
-
   const outputs = await stack.outputs();
 
   writeOutputs(unmarshalOutputs(outputs), options.stack);

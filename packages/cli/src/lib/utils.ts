@@ -5,19 +5,26 @@ import { OutputMap } from '@pulumi/pulumi/automation';
 import * as config from './config';
 import { CustomError } from './errors';
 
-export function getOutputTargetFile(target: string, stack: string) {
-  return path.resolve(target, 'coconut', `${stack}.json`);
+export function getOutputTargetFile(target: string) {
+  return path.resolve(target, 'coconut.json');
 }
 
 export function writeOutputs(outputs: unknown, stack: string) {
   const targetFiles: Array<string> = [];
+  const timestamp = new Date();
 
   config.get().outputs?.targets?.forEach((target) => {
-    const targetFile = getOutputTargetFile(target, stack);
+    const targetFile = getOutputTargetFile(target);
+
+    const targetContent = {
+      stack,
+      timestamp,
+      outputs,
+    };
 
     try {
       process.stdout.write(`writing outputs to ${targetFile}...`);
-      fs.outputJSONSync(targetFile, outputs, { spaces: 2 });
+      fs.outputJSONSync(targetFile, targetContent, { spaces: 2 });
       console.info('done.');
       targetFiles.push(targetFile);
     } catch (err) {
