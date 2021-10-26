@@ -1,7 +1,6 @@
 {
   "name": "todos-mobile",
   "scripts": {
-    "mock": "STACK=mock npx nodemon src/index.ts",
-    "dev": "STACK=dev npx nodemon src/index.ts"  
+    "start": "npx nodemon src/index.ts"
   }
 }

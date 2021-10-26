@@ -1,12 +1,3 @@
-import fs = require('fs');
-import path = require('path');
+import coconut = require('./coconut.json');
 
-const backendFile = path.join(
-  __dirname,
-  'coconut',
-  `${process.env.STACK}.json`
-);
-
-const backend = JSON.parse(fs.readFileSync(backendFile, { encoding: 'utf-8' }));
-
-console.log('User app, backend:', backend);
+console.log('User app, coconut:', coconut);
