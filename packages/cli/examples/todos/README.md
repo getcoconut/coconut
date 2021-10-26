@@ -30,7 +30,7 @@ Once the services are ready, the outputs will be written to the configured outpu
 }
 ```
 
-Now start one of the client apps which load the mock outputs and write them to the console to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
+Now start one of the client apps, e.g. to start the admin app execute the following commands in another terminal:
 
 ```sh
 $ cd apps/admin-app
@@ -51,7 +51,7 @@ This example project has an npm script called `deploy` that does exactly that: i
 $ AWS_PROFILE=<aws profile name> npm run deploy
 ```
 
-Now start one of the client apps, which load the outputs file and write its content to the console, to show how you can use these outputs. To start the admin app for example, execute the following commands in another terminal:
+Now start one of the client apps, e.g. to start the admin app execute the following commands in another terminal:
 
 ```sh
 $ cd apps/admin-app
