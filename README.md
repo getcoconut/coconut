@@ -1,12 +1,12 @@
 # Coconut
 
-> Note: The project is still in a very early develoment stage and not ready for production use, but your feedback and contributions are very welcome!
+> Note: The project is still in a very early development stage and not ready for production use, but your feedback and contributions are very welcome!
 
 Coconut provides tools to make serverless development around the [Pulumi Cloud Framework](https://github.com/pulumi/pulumi-cloud) (PCF) more simple. It allows you to emulate infrastructure locally & develop without deciding on a cloud provider to get started.
 
 ## Packages
 
-Coconut consists of multiple pakcages that work together and that are all hosted in this monorep. Here is the list of the packages and their purposes:
+Coconut consists of multiple packages that work together and that are all hosted in this monorep. Here is the list of the packages and their purposes:
 
 | Name                                                       | Description                                             |
 | ---------------------------------------------------------- | ------------------------------------------------------- |

@@ -10,7 +10,8 @@
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cli/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -28,7 +29,14 @@
             "tsConfig": "packages/cli/tsconfig.lib.json",
             "packageJson": "packages/cli/package.json",
             "main": "packages/cli/src/index.ts",
-            "assets": ["packages/cli/*.md"],
+            "assets": [
+              "packages/cli/*.md",
+              {
+                "glob": "**/*.json",
+                "input": "packages/cli/src/schemas",
+                "output": "src/schemas"
+              }
+            ],
             "cli": true
           }
         },
@@ -68,7 +76,8 @@
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/pulumi-cloud-mock/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
