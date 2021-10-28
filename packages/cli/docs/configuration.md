@@ -1,6 +1,6 @@
 # Configuration
 
-## Configuration file
+## <a name="file"></a>Configuration file
 
 Coconut uses [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) for configuration file support. This means you can configure Coconut via (in order of precedence):
 
@@ -11,7 +11,7 @@ Coconut uses [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) for config
 
 The configuration file will be resolved starting from the current working directory or the project directory specified by the `-p` option, and searching up the file tree until a config file is (or isn’t) found.
 
-## Example
+## <a name="file_example"></a>Example
 
 File `.coconutrc.json`:
 
@@ -27,11 +27,11 @@ File `.coconutrc.json`:
 }
 ```
 
-## Options
+## <a name="opts"></a>Options
 
 Here are the available options, where every option is identified by its full path.
 
-### `outputs/targets`
+### <a name="opts_outputs_targets"></a>`outputs/targets`
 
 Defines a list of folders where the `mock` and `outputs` commands should write the program outputs. These are generally folders that belong to the source code of your client apps that need access to the infrastructure. You can import these outputs files and use the data to access the created resources.
 

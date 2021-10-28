@@ -8,19 +8,35 @@ Coconut CLI is a tool for locally emulating and mocking [Pulumi Cloud Framework]
 
 ## Getting started
 
-To get started, go to your PCF project, install the required packages and run the tool:
+### Prerequisites
+
+As Coconut is a tool for PCF projects, you will need:
+
+- [Pulumi](https://www.pulumi.com)
+- A [PCF](https://github.com/pulumi/pulumi-cloud) project (check above notes for limitations)
+
+### Installation
+
+Add the required packages to you PCF project (use one of the [example projects](./examples) if you don't have one):
 
 ```sh
-$ cd <project>
+$ cd <PCF project>
 $ npm install -D @getcoconut/cli @getcoconut/pulumi-cloud-mock
+```
+
+### Mocking
+
+Run the `mock` command from the root of the PCF project:
+
+```sh
 $ npx coconut mock
 ```
 
-Once the PCF program is executed and the resources are ready, the outputs of the program will be printed on the screen and you can use them for testing. An example of these outputs are the URLs of the HTTP Server resources created by the program.
+Once the PCF program is executed and the resources are ready, the outputs of the program will be printed on the screen. For details on how to use the outputs in your client apps, check the [`outputs/targets`](./docs/configuration.md#opts_outputs_targets) configuration option.
 
 ### Examples
 
-Check the [examples folder](./examples) for some example projects to get you started.
+Check the [examples folder](./examples) for some example projects.
 
 ## Documentation
 
