@@ -1,0 +1,6 @@
+{
+  "name": "todos-user",
+  "scripts": {
+    "start": "npx nodemon src/index.ts"
+  }
+}

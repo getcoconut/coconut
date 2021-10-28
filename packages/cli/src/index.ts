@@ -1,18 +1,19 @@
 import { isCustomError } from './lib/errors';
-import { createParser } from './lib/parser';
+import { program } from './lib/program';
 
 (async function run() {
-  const parser = createParser();
-
   try {
-    await parser.parse();
+    await program.parseAsync();
   } catch (err) {
     if (isCustomError(err)) {
-      console.error(err.message);
+      console.error('error:', err.message);
+    } else if (err?.commandResult) {
+      // Pulumi error
+      if (err?.commandResult?.stdout) console.log(err.commandResult.stdout);
+      if (err?.commandResult?.stderr) console.log(err.commandResult.stderr);
+      if (err?.commandResult?.err) console.error(err.commandResult.err);
     } else {
-      console.error(`An unexepcted error has occurred: ${err?.message || err}`);
+      console.error(`an unexepcted error has occurred: ${err?.message || err}`);
     }
-
-    parser.exit(1, err);
   }
 })();

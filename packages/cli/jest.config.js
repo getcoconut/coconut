@@ -12,4 +12,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   coverageDirectory: '../../coverage/packages/cli',
+  setupFilesAfterEnv: ['./jest.setup.ts'],
 };
